@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" http-equiv="Content-Type" />
+    <!-- jQuery Mobile -->
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../../scripts/menu.js"></script>
+    <script>
+        var loaded = false;
+
+        $(document).on("pagecreate", function () {
+            if (!loaded) {
+                Limpiar();
+                loaded = true;
+            }
+        });
+
+        function Limpiar() {
+
+            //Limpiar variables
+            localStorage.setItem("TramiteId", 0);
+            localStorage.setItem("EstadoId", 0);
+
+            //Limpiar formulario
+            $("#set").append("").collapsibleset("refresh");
+            $('#novedad').val("");
+            $('input[name="rdoEstado"]').prop('checked', false);
+
+            //Cargar Tramites
+            CargarTramites();
+
+            //Cargar Mensajeros
+            CargarMensajeros();
+
+            //Limpiar Popups
+            var popupCambiarEstadoForm = $(".popupCambiarEstadoForm");
+            var popupCambiarEstadoSatisfactorio = $(".popupCambiarEstadoSatisfactorio");
+            var popupCambiarEstadoError = $(".popupCambiarEstadoError");
+            popupCambiarEstadoForm.attr("style", "display: inline");
+            popupCambiarEstadoSatisfactorio.attr("style", "display: none");
+            popupCambiarEstadoError.attr("style", "display: none");
+            var popupTrasladarForm = $(".popupTrasladarForm");
+            var popupTrasladarSatisfactorio = $(".popupTrasladarSatisfactorio");
+            var popupTrasladarError = $(".popupTrasladarError");
+            popupTrasladarForm.attr("style", "display: inline");
+            popupTrasladarSatisfactorio.attr("style", "display: none");
+            popupTrasladarError.attr("style", "display: none");
+        }
+
+        function SetTramiteId(id) {
+            localStorage.setItem("TramiteId", id);
+        }
+
+        function SetEstadoId(id) {
+            localStorage.setItem("EstadoId", id);
+        }
+
+        $('#radiosEstados input').on('change', function () {
+            localStorage.setItem("EstadoId", $('input[name=rdoEstado]:checked', '#radiosEstados').val());
+        });
+        function Categorias() {
+            window.location.replace("categorias.html");
+        }
+        function Mensajeros() {
+            window.location.replace("mensajeros.html");
+        }
+        function Traslados() {
+            window.location.replace("traslados.html");
+        }
+
+    </script>
+    <script src="../../scripts/admin/cambiar_estado.js"></script>
+    <script src="../../scripts/admin/trasladar_tramite.js"></script>
+    <script src="../../scripts/admin/cargar_mensajeros.js"></script>
+    <script src="../../scripts/admin/cargar_tramites.js"></script>
+    <script src="../../scripts/cerrar_sesion.js"></script>
+</head>
+<body>
+    <div data-role="page" id="demo-page" data-url="demo-page">
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>O'Clock</h1>
+            <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Open</a>
+            <a href="#" data-icon="refresh" data-iconpos="notext" data-shadow="false" data-iconshadow="false" onclick="CargarTramites()" data-transition="slidedown">Refresh</a>
+        </div>        
+        
+        <!--Content-->
+        <div role="main" class="ui-content">
+            <div class="content" id="content">
+                <div data-role="content">
+                    <form id="formulario">
+                        <div data-role="collapsible-set" data-content-theme="a" data-iconpos="right" id="set">
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>  
+
+        <!--Menu-->
+        <div data-role="panel" data-position-fixed="true" data-display="overlay" id="left-panel">
+            <ul data-role="listview" data-content-theme="a">
+                <li data-icon="delete"><a href="#" data-rel="close">Cerrar Menú</a></li>
+                <li><a href="#" onclick="Categorias()">Categorias</a></li>
+                <li><a href="#" onclick="Mensajeros()">Mensajeros</a></li>
+                <li><a href="#" onclick="Traslados()">Traslados</a></li>
+                <li><a href="#" onclick="CerrarSesion()">Cerrar sesión</a></li>
+            </ul>
+        </div>
+
+        <!--Popup Cambiar Estado-->
+        <div data-role="popup" id="popupCambiarEstado" data-dismissible="false">
+            <div class="popupCambiarEstadoForm" style="display: inline">
+                <form id="radiosEstados">
+                    <div style="padding: 10px 20px;">
+                        <fieldset data-role="controlgroup">
+                            <legend>Seleccione una opción</legend>
+                            <input type="radio" name="rdoEstado" id="rdoEnEspera" value="1" onclick="SetEstadoId(1)">
+                            <label for="rdoEnEspera">En espera</label>
+                            <input type="radio" name="rdoEstado" id="rdoEnTramite" value="2" onclick="SetEstadoId(2)">
+                            <label for="rdoEnTramite">En trámite</label>
+                            <input type="radio" name="rdoEstado" id="rdoFinalizado" value="3" onclick="SetEstadoId(3)">
+                            <label for="rdoFinalizado">Finalizado</label>
+                            <input type="radio" name="rdoEstado" id="rdoRechazado" value="4" onclick="SetEstadoId(4)">
+                            <label for="rdoRechazado">Rechazado</label>
+                        </fieldset>
+                    </div>
+                </form>
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <div data-role="fieldcontain">
+                            <label for="novedad">¿Alguna novedad?</label>
+                            <textarea cols=25 rows='4' name="novedad" id="novedad"></textarea>
+                        </div>
+                        <button type="button" data-icon="check" data-iconpos="left" data-mini="false" data-inline="false" id="aceptar" onclick="CambiarEstado()">Aceptar</button>
+                        <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupCambiarEstadoSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Estado cambiado con éxito.</label>
+                        <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupCambiarEstadoError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup Mensajero-->
+        <div data-role="popup" id="popupTrasladar" data-dismissible="false">
+            <div class="popupTrasladarForm" style="display: inline">
+                <form>
+                    <ul data-role="listview" data-inset="true" style="min-width: 210px;" data-content-theme="a">
+                        <li data-role="list-divider">Seleccione una opción</li>
+                        <li id="setpopupMensajeros"></li>
+                        <!--<li><a href="#" data-rel="back"><button type="button" data-icon="delete" data-iconpos="left" data-mini="true" data-inline="true" class="ui-btn ui-btn-icon-carat-r" onclick="Limpiar()">Cerrar</button></a></li>-->
+                        <li>
+                            <div style="padding: 5px 10px;">
+                                <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                            </div>
+                        </li>
+                    </ul>
+                </form>
+            </div>
+            <div class="popupTrasladarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label for="lblmensaje">Traslado realizado con éxito</label>
+                        <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupTrasladarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

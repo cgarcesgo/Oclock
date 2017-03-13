@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Validacion de Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <!--Login-->
+    <script>
+        
+        //Carga la página
+        $(document).on("pagecreate", function () {
+            var user = JSON.parse(localStorage.getItem("User"));
+            if (user != null && user != undefined) {
+                IngresarLogin();
+            }
+        });
+
+        function Validar() {
+            var popupIngresarForm = $(".popupIngresarForm");
+            var popupIngresarSatisfactorio = $(".popupIngresarSatisfactorio");
+            var popupIngresarIncorrecto = $(".popupIngresarIncorrecto");
+            var popupIngresarError = $(".popupIngresarError");
+            var popupIngresarVacios = $(".popupIngresarVacios");
+
+            var usuario = $('#usuario').val()
+            var contrasenia = $('#contrasenia').val()
+
+            var ruta = "http://40.85.92.66:1010/api/Usuarios?user=" + usuario;
+
+            if (usuario == '' || contrasenia == '') {
+                popupIngresarForm.attr("style", "display: none");
+                popupIngresarSatisfactorio.attr("style", "display: none");
+                popupIngresarIncorrecto.attr("style", "display: none");
+                popupIngresarError.attr("style", "display: none");
+                popupIngresarVacios.attr("style", "display: inline");
+            }
+            else {
+                $.ajax({
+                    type: "GET",
+                    url: ruta,
+                    data: "{}",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    error: function (xhr, status, error) {
+                        if (error == "Not Found") {
+                            popupIngresarForm.attr("style", "display: none");
+                            popupIngresarSatisfactorio.attr("style", "display: none");
+                            popupIngresarIncorrecto.attr("style", "display: inline");
+                            popupIngresarError.attr("style", "display: none");
+                            popupIngresarVacios.attr("style", "display: none");
+                        } else {
+                            popupIngresarForm.attr("style", "display: none");
+                            popupIngresarSatisfactorio.attr("style", "display: none");
+                            popupIngresarIncorrecto.attr("style", "display: none");
+                            popupIngresarError.attr("style", "display: inline");
+                            popupIngresarVacios.attr("style", "display: none");
+                        }
+                        return false;
+                    },
+                    success: function (msg) {
+                        if (msg.User == usuario && msg.Password == contrasenia) {
+                            localStorage.setItem("UserId", msg.Id);
+                            localStorage.setItem("User", JSON.stringify(msg));
+                            popupIngresarForm.attr("style", "display: none");
+                            popupIngresarSatisfactorio.attr("style", "display: inline");
+                            popupIngresarIncorrecto.attr("style", "display: none");
+                            popupIngresarError.attr("style", "display: none");
+                            popupIngresarVacios.attr("style", "display: none");
+
+                        } else {
+                            popupIngresarForm.attr("style", "display: none");
+                            popupIngresarSatisfactorio.attr("style", "display: none");
+                            popupIngresarIncorrecto.attr("style", "display: inline");
+                            popupIngresarError.attr("style", "display: none");
+                            popupIngresarVacios.attr("style", "display: none");
+                        }
+                        return false;
+                    }
+                });
+            }
+            return false;
+        }
+
+        function IngresarLogin() {
+            var user = JSON.parse(localStorage.getItem("User"));
+            if (user.RolId == 1) {
+                window.location.replace("views/admin/index_admin.html");
+            } else if (user.RolId == 2) {
+                window.location.replace("views/colabo/index_colabo.html");
+            } else if (user.RolId == 3) {
+                window.location.replace("views/user/index_user.html");
+            }
+        }
+
+        function InicializaIngresar() {
+            var popupIngresarForm = $(".popupIngresarForm");
+            var popupIngresarSatisfactorio = $(".popupIngresarSatisfactorio");
+            var popupIngresarIncorrecto = $(".popupIngresarIncorrecto");
+            var popupIngresarError = $(".popupIngresarError");
+            var popupIngresarVacios = $(".popupIngresarVacios");
+            popupIngresarForm.attr("style", "display: inline");
+            popupIngresarSatisfactorio.attr("style", "display: none");
+            popupIngresarIncorrecto.attr("style", "display: none");
+            popupIngresarError.attr("style", "display: none");
+            popupIngresarVacios.attr("style", "display: none");
+        }
+
+        function IniciarRegistro() {
+            localStorage.setItem("UserRegister", "");
+            window.location.replace("register.html");
+        }
+    </script>
+</head>
+<body>
+    <div data-role="page" id="inicio">
+        <div data-role="content">
+            <br />
+            <br />
+            <center>
+                <img src="images/LogoLogin.png" />
+            </center>
+            <br />
+            <form id="formulario">
+                <input type="text" data-clear-btn="true" name="usuario" id="usuario" value="" placeholder="Usuario" />
+                <input type="password" data-clear-btn="true" name="contrasenia" id="contrasenia" value="" placeholder="Contraseña" />
+                <a href="#popupIngresar" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" style="text-decoration: none;"><button type="button" data-icon="lock" data-iconpos="left" data-mini="false" data-inline="false" id="abriractualizar" onclick="Validar()">Ingresar</button></a>
+                <center><a href="#" style="color:white" onclick="IniciarRegistro()"><h3>Crear cuenta</h3></a></center>
+            </form>
+        </div>
+
+        <!--Popup ingresar-->
+        <div data-role="popup" id="popupIngresar" data-dismissible="false">
+            <div class="popupIngresarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px;">
+                        <label for="lblmensaje"><b>Estamos validado su información.</b></label>
+                        <label for="lblmensaje">Esta operación durará unos segundos.</label>
+                        <!--<a href="#" data-rel="back" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>-->
+                    </div>
+                </form>
+            </div>
+            <div class="popupIngresarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label for="lblmensaje"><b>Bienvenido a O'Clock</b></label>
+                        <label for="lblmensaje">Mensajería para uso personal o empresarial, el cual se fundamenta en la confianza.</label>
+                        <button onclick="IngresarLogin()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-action ui-btn-icon-left">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupIngresarIncorrecto" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Usuario y/o Contraseña incorrectos.</label>
+                        <a href="#" data-rel="back" onclick="InicializaIngresar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupIngresarVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Usuario y Contraseña son obligatorios.</label>
+                        <a href="#" data-rel="back" onclick="InicializaIngresar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupIngresarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" data-rel="back" onclick="InicializaIngresar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

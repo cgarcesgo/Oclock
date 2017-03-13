@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" http-equiv="Content-Type" />
+    <!-- jQuery Mobile -->
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../../scripts/menu.js"></script>
+</head>
+<body>
+    <div data-role="page" id="demo-page" data-url="demo-page">
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>Perfil</h1>
+            <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Open</a>
+        </div>
+        <!--Content-->
+        <div data-role="content">
+            <form id="formulario">
+                <a href="#popupcambiarpass" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" style="text-decoration: none;"><button type="button" data-icon="lock" data-iconpos="left" data-mini="false" data-inline="false" id="cambiarpass">Cambiar Contraseña</button></a>
+                <input type="text" data-clear-btn="true" name="nombres" id="nombres" value="" placeholder="Nombre" />
+                <input type="text" data-clear-btn="true" name="apellidos" id="apellidos" value="" placeholder="Apellidos" />
+                <input type="text" data-clear-btn="true" name="nit" id="nit" value="" placeholder="Nit (opcional)" />
+                <input type="email" data-clear-btn="true" name="email" id="email" value="" placeholder="E-mail" />
+                <input type="tel" data-clear-btn="true" name="celular" id="celular" value="" placeholder="Celular" />
+                <a href="#popupactualizar" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" style="text-decoration: none;"><button type="button" data-icon="recycle" data-iconpos="left" data-mini="false" data-inline="false" id="abriractualizar">Actualizar</button></a>
+                <!--<button type="button" data-icon="delete" data-iconpos="left" data-mini="false" data-inline="false" id="cancelar" onclick="atras()">Cancelar</button>-->
+            </form>
+        </div>
+
+        <!--Menu-->
+        <div data-role="panel" data-position-fixed="true" data-display="overlay" id="left-panel">
+            <ul data-role="listview" data-content-theme="a">
+                <li data-icon="delete"><a href="#" data-rel="close">Cerrar Menú</a></li>
+                <li><a href="#" onclick="IniciarTramite()">Crear Trámite</a></li>
+                <!--<li><a href="perfil.html">Perfil</a></li>-->
+                <li><a href="ver_tramite.html">Mis trámites</a></li>
+                <li><a href="ver_categorias.html">Precios y categorías</a></li>
+                <li><a href="terminos_condiciones.html">Términos y condiciones</a></li>
+                <li><a href="#" id="cerrarPerfil" onclick="CerrarSesion()">Cerrar sesión</a></li>
+            </ul>
+        </div>
+
+        <!--Popup cambiar contraseña-->
+        <div data-role="popup" id="popupcambiarpass" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" onclick="InicializarContrasenas()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div class="popupCambiarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <label for="nametramite">Cambiar Contraseña</label>
+                        <input type="password" name="actualcontrasenia" id="actualcontrasenia" placeholder="Contraseña Actual" />
+                        <input type="password" name="newcontrasenia" id="newcontrasenia" placeholder="Nueva Contraseña" />
+                        <input type="password" name="confirmecontrasenia" id="confirmecontrasenia" placeholder="Confirme Contraseña" />
+                        <button type="button" id="changepass" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-recycle">Cambiar</button>
+                    </div>
+                </form>    
+            </div>
+            <div class="popupContrasenaCambiada" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Contraseña actualizada con éxito.</label>
+                    </div>
+                </form>
+            </div>
+            <div class="popupContrasenaIncorrecta" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>La contraseña es incorrecta.</label>
+                        <button type="button" onclick="DevolverCambios();" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Reintentar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupContrasenaDiferente" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Las contraseñas no coinciden.</label>
+                        <button type="button" onclick="DevolverCambios();" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Reintentar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupCamposVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Los campos son obligatorios.</label>
+                        <button type="button" onclick="DevolverCambios();" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-forward">Reintentar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup actualizar-->
+        <div data-role="popup" id="popupactualizar" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" onclick="InicializaActualizar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div class="popupActualizarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <label>¿Estás seguro de actualizar el perfil?</label>
+                        <button type="button" id="actualizar" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupActualizarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Usuario actualizado con éxito.</label>
+                    </div>
+                </form>
+            </div>
+            <div class="popupCamposVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Los campos son obligatorios.</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

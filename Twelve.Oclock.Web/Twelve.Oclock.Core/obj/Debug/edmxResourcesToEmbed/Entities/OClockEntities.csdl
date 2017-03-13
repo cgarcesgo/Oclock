@@ -1,0 +1,370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OClockModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="OClockEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Categorias" EntityType="OClockModel.Categoria" />
+    <EntitySet Name="DetalleFavoritos" EntityType="OClockModel.DetalleFavorito" />
+    <EntitySet Name="DetalleTramites" EntityType="OClockModel.DetalleTramite" />
+    <EntitySet Name="Estados" EntityType="OClockModel.Estado" />
+    <EntitySet Name="EstadosTramites" EntityType="OClockModel.EstadosTramite" />
+    <EntitySet Name="Favoritos" EntityType="OClockModel.Favorito" />
+    <EntitySet Name="Localizaciones" EntityType="OClockModel.Localizacione" />
+    <EntitySet Name="Roles" EntityType="OClockModel.Role" />
+    <EntitySet Name="Tramites" EntityType="OClockModel.Tramite" />
+    <EntitySet Name="Traslados" EntityType="OClockModel.Traslado" />
+    <EntitySet Name="Usuarios" EntityType="OClockModel.Usuario" />
+    <AssociationSet Name="FK_DetalleFavoritos_Categorias" Association="OClockModel.FK_DetalleFavoritos_Categorias">
+      <End Role="Categoria" EntitySet="Categorias" />
+      <End Role="DetalleFavorito" EntitySet="DetalleFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleTramites_Categorias" Association="OClockModel.FK_DetalleTramites_Categorias">
+      <End Role="Categoria" EntitySet="Categorias" />
+      <End Role="DetalleTramite" EntitySet="DetalleTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleFavoritos_Favoritos" Association="OClockModel.FK_DetalleFavoritos_Favoritos">
+      <End Role="Favorito" EntitySet="Favoritos" />
+      <End Role="DetalleFavorito" EntitySet="DetalleFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleTramites_Tramites" Association="OClockModel.FK_DetalleTramites_Tramites">
+      <End Role="Tramite" EntitySet="Tramites" />
+      <End Role="DetalleTramite" EntitySet="DetalleTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadosTramites_Estados" Association="OClockModel.FK_EstadosTramites_Estados">
+      <End Role="Estado" EntitySet="Estados" />
+      <End Role="EstadosTramite" EntitySet="EstadosTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadosTramites_Tramites" Association="OClockModel.FK_EstadosTramites_Tramites">
+      <End Role="Tramite" EntitySet="Tramites" />
+      <End Role="EstadosTramite" EntitySet="EstadosTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Localizaciones_Usuarios" Association="OClockModel.FK_Localizaciones_Usuarios">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Localizacione" EntitySet="Localizaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles" Association="OClockModel.FK_Usuarios_Roles">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Usuario" EntitySet="Usuarios" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tramites_Usuarios" Association="OClockModel.FK_Tramites_Usuarios">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Tramite" EntitySet="Tramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tramites_Usuarios1" Association="OClockModel.FK_Tramites_Usuarios1">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Tramite" EntitySet="Tramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Tramites" Association="OClockModel.FK_Traslados_Tramites">
+      <End Role="Tramite" EntitySet="Tramites" />
+      <End Role="Traslado" EntitySet="Traslados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Usuarios" Association="OClockModel.FK_Traslados_Usuarios">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Traslado" EntitySet="Traslados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Usuarios1" Association="OClockModel.FK_Traslados_Usuarios1">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Traslado" EntitySet="Traslados" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Categoria">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Precio" Type="Int32" Nullable="false" />
+    <Property Name="PrecioPriorizado" Type="Int32" />
+    <Property Name="Comprobante" Type="Boolean" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DetalleFavoritos" Relationship="OClockModel.FK_DetalleFavoritos_Categorias" FromRole="Categoria" ToRole="DetalleFavorito" />
+    <NavigationProperty Name="DetalleTramites" Relationship="OClockModel.FK_DetalleTramites_Categorias" FromRole="Categoria" ToRole="DetalleTramite" />
+  </EntityType>
+  <EntityType Name="DetalleFavorito">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FavoritoId" Type="Int32" Nullable="false" />
+    <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+    <Property Name="Salida" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Llegada" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="LatitudSalida" Type="Double" />
+    <Property Name="LongitudSalida" Type="Double" />
+    <Property Name="LatitudLlegada" Type="Double" />
+    <Property Name="LongitudLlegada" Type="Double" />
+    <NavigationProperty Name="Categoria" Relationship="OClockModel.FK_DetalleFavoritos_Categorias" FromRole="DetalleFavorito" ToRole="Categoria" />
+    <NavigationProperty Name="Favorito" Relationship="OClockModel.FK_DetalleFavoritos_Favoritos" FromRole="DetalleFavorito" ToRole="Favorito" />
+  </EntityType>
+  <EntityType Name="DetalleTramite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TramiteId" Type="Int32" Nullable="false" />
+    <Property Name="CategoriaId" Type="Int32" Nullable="false" />
+    <Property Name="Salida" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Llegada" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="LatitudSalida" Type="Double" />
+    <Property Name="LongitudSalida" Type="Double" />
+    <Property Name="LatitudLlegada" Type="Double" />
+    <Property Name="LongitudLlegada" Type="Double" />
+    <NavigationProperty Name="Categoria" Relationship="OClockModel.FK_DetalleTramites_Categorias" FromRole="DetalleTramite" ToRole="Categoria" />
+    <NavigationProperty Name="Tramite" Relationship="OClockModel.FK_DetalleTramites_Tramites" FromRole="DetalleTramite" ToRole="Tramite" />
+  </EntityType>
+  <EntityType Name="Estado">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EstadosTramites" Relationship="OClockModel.FK_EstadosTramites_Estados" FromRole="Estado" ToRole="EstadosTramite" />
+  </EntityType>
+  <EntityType Name="EstadosTramite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EstadoId" Type="Int32" Nullable="false" />
+    <Property Name="TramiteId" Type="Int32" Nullable="false" />
+    <Property Name="Novedad" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Estado" Relationship="OClockModel.FK_EstadosTramites_Estados" FromRole="EstadosTramite" ToRole="Estado" />
+    <NavigationProperty Name="Tramite" Relationship="OClockModel.FK_EstadosTramites_Tramites" FromRole="EstadosTramite" ToRole="Tramite" />
+  </EntityType>
+  <EntityType Name="Favorito">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="Comprobante" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DetalleFavoritos" Relationship="OClockModel.FK_DetalleFavoritos_Favoritos" FromRole="Favorito" ToRole="DetalleFavorito" />
+  </EntityType>
+  <EntityType Name="Localizacione">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="Longitud" Type="Double" Nullable="false" />
+    <Property Name="Latitud" Type="Double" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Usuario" Relationship="OClockModel.FK_Localizaciones_Usuarios" FromRole="Localizacione" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Usuarios" Relationship="OClockModel.FK_Usuarios_Roles" FromRole="Role" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Tramite">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="ColaboradorId" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Priorizado" Type="Boolean" Nullable="false" />
+    <Property Name="FechaProgramado" Type="DateTime" Precision="3" />
+    <Property Name="Comprobante" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="DetalleTramites" Relationship="OClockModel.FK_DetalleTramites_Tramites" FromRole="Tramite" ToRole="DetalleTramite" />
+    <NavigationProperty Name="EstadosTramites" Relationship="OClockModel.FK_EstadosTramites_Tramites" FromRole="Tramite" ToRole="EstadosTramite" />
+    <NavigationProperty Name="Usuario" Relationship="OClockModel.FK_Tramites_Usuarios" FromRole="Tramite" ToRole="Usuario" />
+    <NavigationProperty Name="Usuario1" Relationship="OClockModel.FK_Tramites_Usuarios1" FromRole="Tramite" ToRole="Usuario" />
+    <NavigationProperty Name="Traslados" Relationship="OClockModel.FK_Traslados_Tramites" FromRole="Tramite" ToRole="Traslado" />
+  </EntityType>
+  <EntityType Name="Traslado">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TramiteId" Type="Int32" Nullable="false" />
+    <Property Name="ColaboradorOrigenId" Type="Int32" Nullable="false" />
+    <Property Name="ColaboradorDestinoId" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Tramite" Relationship="OClockModel.FK_Traslados_Tramites" FromRole="Traslado" ToRole="Tramite" />
+    <NavigationProperty Name="Usuario" Relationship="OClockModel.FK_Traslados_Usuarios" FromRole="Traslado" ToRole="Usuario" />
+    <NavigationProperty Name="Usuario1" Relationship="OClockModel.FK_Traslados_Usuarios1" FromRole="Traslado" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Apellido" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Celular" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Nit" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="RolId" Type="Int32" Nullable="false" />
+    <Property Name="Activo" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Localizaciones" Relationship="OClockModel.FK_Localizaciones_Usuarios" FromRole="Usuario" ToRole="Localizacione" />
+    <NavigationProperty Name="Role" Relationship="OClockModel.FK_Usuarios_Roles" FromRole="Usuario" ToRole="Role" />
+    <NavigationProperty Name="Tramites" Relationship="OClockModel.FK_Tramites_Usuarios" FromRole="Usuario" ToRole="Tramite" />
+    <NavigationProperty Name="Tramites1" Relationship="OClockModel.FK_Tramites_Usuarios1" FromRole="Usuario" ToRole="Tramite" />
+    <NavigationProperty Name="Traslados" Relationship="OClockModel.FK_Traslados_Usuarios" FromRole="Usuario" ToRole="Traslado" />
+    <NavigationProperty Name="Traslados1" Relationship="OClockModel.FK_Traslados_Usuarios1" FromRole="Usuario" ToRole="Traslado" />
+  </EntityType>
+  <Association Name="FK_DetalleFavoritos_Categorias">
+    <End Type="OClockModel.Categoria" Role="Categoria" Multiplicity="1" />
+    <End Type="OClockModel.DetalleFavorito" Role="DetalleFavorito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFavorito">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleTramites_Categorias">
+    <End Type="OClockModel.Categoria" Role="Categoria" Multiplicity="1" />
+    <End Type="OClockModel.DetalleTramite" Role="DetalleTramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categoria">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleTramite">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleFavoritos_Favoritos">
+    <End Type="OClockModel.Favorito" Role="Favorito" Multiplicity="1" />
+    <End Type="OClockModel.DetalleFavorito" Role="DetalleFavorito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Favorito">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFavorito">
+        <PropertyRef Name="FavoritoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleTramites_Tramites">
+    <End Type="OClockModel.Tramite" Role="Tramite" Multiplicity="1" />
+    <End Type="OClockModel.DetalleTramite" Role="DetalleTramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramite">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleTramite">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadosTramites_Estados">
+    <End Type="OClockModel.Estado" Role="Estado" Multiplicity="1" />
+    <End Type="OClockModel.EstadosTramite" Role="EstadosTramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estado">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstadosTramite">
+        <PropertyRef Name="EstadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadosTramites_Tramites">
+    <End Type="OClockModel.Tramite" Role="Tramite" Multiplicity="1" />
+    <End Type="OClockModel.EstadosTramite" Role="EstadosTramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramite">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstadosTramite">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Localizaciones_Usuarios">
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="OClockModel.Localizacione" Role="Localizacione" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Localizacione">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles">
+    <End Type="OClockModel.Role" Role="Role" Multiplicity="1" />
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuario">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tramites_Usuarios">
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="OClockModel.Tramite" Role="Tramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tramite">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tramites_Usuarios1">
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="OClockModel.Tramite" Role="Tramite" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tramite">
+        <PropertyRef Name="ColaboradorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Tramites">
+    <End Type="OClockModel.Tramite" Role="Tramite" Multiplicity="1" />
+    <End Type="OClockModel.Traslado" Role="Traslado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramite">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslado">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Usuarios">
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="OClockModel.Traslado" Role="Traslado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslado">
+        <PropertyRef Name="ColaboradorOrigenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Usuarios1">
+    <End Type="OClockModel.Usuario" Role="Usuario" Multiplicity="1" />
+    <End Type="OClockModel.Traslado" Role="Traslado" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslado">
+        <PropertyRef Name="ColaboradorDestinoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

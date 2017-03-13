@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Twelve.Oclock.Core", "Twelve.Oclock.Core", "{E49F7614-94F9-41FE-936F-4AC1EA68A6F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Twelve.Oclock.Service", "Twelve.Oclock.Service", "{DD787BD9-8D5A-4D44-839A-93D9D633BA38}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twelve.Oclock.Core", "Twelve.Oclock.Core\Twelve.Oclock.Core.csproj", "{A59B861E-A97D-44A0-A1B7-DB02095BC81D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Twelve.Oclock.WebApi", "Twelve.Oclock.WebApi\Twelve.Oclock.WebApi.csproj", "{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A59B861E-A97D-44A0-A1B7-DB02095BC81D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A59B861E-A97D-44A0-A1B7-DB02095BC81D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A59B861E-A97D-44A0-A1B7-DB02095BC81D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A59B861E-A97D-44A0-A1B7-DB02095BC81D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A59B861E-A97D-44A0-A1B7-DB02095BC81D} = {E49F7614-94F9-41FE-936F-4AC1EA68A6F7}
+		{D6BAADC9-27A4-4D6C-BAE7-BC57C95634E1} = {DD787BD9-8D5A-4D44-839A-93D9D633BA38}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://twelvegroup.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Twelve.Oclock.Core\\Twelve.Oclock.Core.csproj
+		SccProjectTopLevelParentUniqueName1 = Twelve.Oclock.Web.sln
+		SccProjectName1 = Twelve.Oclock.Core
+		SccLocalPath1 = Twelve.Oclock.Core
+		SccProjectUniqueName2 = Twelve.Oclock.WebApi\\Twelve.Oclock.WebApi.csproj
+		SccProjectTopLevelParentUniqueName2 = Twelve.Oclock.Web.sln
+		SccProjectName2 = Twelve.Oclock.WebApi
+		SccLocalPath2 = Twelve.Oclock.WebApi
+	EndGlobalSection
+EndGlobal

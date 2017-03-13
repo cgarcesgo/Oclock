@@ -1,0 +1,11 @@
+{
+     "android": {
+      "release": {
+        "keystore": "c:\\com-twelve-oclock.keystore",
+        "storePassword": "f5pltwelve",
+        "alias": "oclock",
+        "password": "f5pltwelve",
+        "keystoreType": ""
+      }
+     }
+ }

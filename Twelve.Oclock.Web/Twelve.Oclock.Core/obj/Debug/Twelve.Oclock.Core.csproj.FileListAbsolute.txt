@@ -1,0 +1,17 @@
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.dll.config
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.dll
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.pdb
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\EntityFramework.dll
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.csprojResolveAssemblyReference.cache
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.dll
+E:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.pdb
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.dll.config
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.dll
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\Twelve.Oclock.Core.pdb
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\EntityFramework.dll
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\EntityFramework.SqlServer.dll
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\EntityFramework.xml
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\bin\Debug\EntityFramework.SqlServer.xml
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.dll
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.pdb
+C:\TFS\Twelve.Oclock\Twelve.Oclock.Web\Twelve.Oclock.Core\obj\Debug\Twelve.Oclock.Core.csprojResolveAssemblyReference.cache

@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="OClockModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Categorias">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Precio" Type="int" Nullable="false" />
+    <Property Name="PrecioPriorizado" Type="int" />
+    <Property Name="Comprobante" Type="bit" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DetalleFavoritos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FavoritoId" Type="int" Nullable="false" />
+    <Property Name="CategoriaId" Type="int" Nullable="false" />
+    <Property Name="Salida" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Llegada" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="LatitudSalida" Type="float" />
+    <Property Name="LongitudSalida" Type="float" />
+    <Property Name="LatitudLlegada" Type="float" />
+    <Property Name="LongitudLlegada" Type="float" />
+  </EntityType>
+  <EntityType Name="DetalleTramites">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TramiteId" Type="int" Nullable="false" />
+    <Property Name="CategoriaId" Type="int" Nullable="false" />
+    <Property Name="Salida" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Llegada" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Descripcion" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="LatitudSalida" Type="float" />
+    <Property Name="LongitudSalida" Type="float" />
+    <Property Name="LatitudLlegada" Type="float" />
+    <Property Name="LongitudLlegada" Type="float" />
+  </EntityType>
+  <EntityType Name="Estados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EstadosTramites">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="EstadoId" Type="int" Nullable="false" />
+    <Property Name="TramiteId" Type="int" Nullable="false" />
+    <Property Name="Novedad" Type="varchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="Favoritos">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="Comprobante" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Localizaciones">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Longitud" Type="float" Nullable="false" />
+    <Property Name="Latitud" Type="float" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="15" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Tramites">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="ColaboradorId" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+    <Property Name="Priorizado" Type="bit" Nullable="false" />
+    <Property Name="FechaProgramado" Type="datetime" />
+    <Property Name="Comprobante" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Traslados">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TramiteId" Type="int" Nullable="false" />
+    <Property Name="ColaboradorOrigenId" Type="int" Nullable="false" />
+    <Property Name="ColaboradorDestinoId" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuarios">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Apellido" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Celular" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Nit" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="User" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="200" Nullable="false" />
+    <Property Name="RolId" Type="int" Nullable="false" />
+    <Property Name="Activo" Type="bit" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DetalleFavoritos_Categorias">
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+    <End Role="DetalleFavoritos" Type="Self.DetalleFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFavoritos">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleFavoritos_Favoritos">
+    <End Role="Favoritos" Type="Self.Favoritos" Multiplicity="1" />
+    <End Role="DetalleFavoritos" Type="Self.DetalleFavoritos" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Favoritos">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleFavoritos">
+        <PropertyRef Name="FavoritoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleTramites_Categorias">
+    <End Role="Categorias" Type="Self.Categorias" Multiplicity="1" />
+    <End Role="DetalleTramites" Type="Self.DetalleTramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Categorias">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleTramites">
+        <PropertyRef Name="CategoriaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DetalleTramites_Tramites">
+    <End Role="Tramites" Type="Self.Tramites" Multiplicity="1" />
+    <End Role="DetalleTramites" Type="Self.DetalleTramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramites">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="DetalleTramites">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadosTramites_Estados">
+    <End Role="Estados" Type="Self.Estados" Multiplicity="1" />
+    <End Role="EstadosTramites" Type="Self.EstadosTramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Estados">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstadosTramites">
+        <PropertyRef Name="EstadoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EstadosTramites_Tramites">
+    <End Role="Tramites" Type="Self.Tramites" Multiplicity="1" />
+    <End Role="EstadosTramites" Type="Self.EstadosTramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramites">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="EstadosTramites">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Localizaciones_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Localizaciones" Type="Self.Localizaciones" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Localizaciones">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tramites_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Tramites" Type="Self.Tramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tramites">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Tramites_Usuarios1">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Tramites" Type="Self.Tramites" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Tramites">
+        <PropertyRef Name="ColaboradorId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Tramites">
+    <End Role="Tramites" Type="Self.Tramites" Multiplicity="1" />
+    <End Role="Traslados" Type="Self.Traslados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Tramites">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslados">
+        <PropertyRef Name="TramiteId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Usuarios">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Traslados" Type="Self.Traslados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslados">
+        <PropertyRef Name="ColaboradorOrigenId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Traslados_Usuarios1">
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+    <End Role="Traslados" Type="Self.Traslados" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuarios">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Traslados">
+        <PropertyRef Name="ColaboradorDestinoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Usuarios_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Usuarios">
+        <PropertyRef Name="RolId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="OClockModelStoreContainer">
+    <EntitySet Name="Categorias" EntityType="Self.Categorias" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleFavoritos" EntityType="Self.DetalleFavoritos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DetalleTramites" EntityType="Self.DetalleTramites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Estados" EntityType="Self.Estados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EstadosTramites" EntityType="Self.EstadosTramites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Favoritos" EntityType="Self.Favoritos" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Localizaciones" EntityType="Self.Localizaciones" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Tramites" EntityType="Self.Tramites" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Traslados" EntityType="Self.Traslados" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_DetalleFavoritos_Categorias" Association="Self.FK_DetalleFavoritos_Categorias">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="DetalleFavoritos" EntitySet="DetalleFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleFavoritos_Favoritos" Association="Self.FK_DetalleFavoritos_Favoritos">
+      <End Role="Favoritos" EntitySet="Favoritos" />
+      <End Role="DetalleFavoritos" EntitySet="DetalleFavoritos" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleTramites_Categorias" Association="Self.FK_DetalleTramites_Categorias">
+      <End Role="Categorias" EntitySet="Categorias" />
+      <End Role="DetalleTramites" EntitySet="DetalleTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DetalleTramites_Tramites" Association="Self.FK_DetalleTramites_Tramites">
+      <End Role="Tramites" EntitySet="Tramites" />
+      <End Role="DetalleTramites" EntitySet="DetalleTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadosTramites_Estados" Association="Self.FK_EstadosTramites_Estados">
+      <End Role="Estados" EntitySet="Estados" />
+      <End Role="EstadosTramites" EntitySet="EstadosTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EstadosTramites_Tramites" Association="Self.FK_EstadosTramites_Tramites">
+      <End Role="Tramites" EntitySet="Tramites" />
+      <End Role="EstadosTramites" EntitySet="EstadosTramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Localizaciones_Usuarios" Association="Self.FK_Localizaciones_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Localizaciones" EntitySet="Localizaciones" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tramites_Usuarios" Association="Self.FK_Tramites_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Tramites" EntitySet="Tramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Tramites_Usuarios1" Association="Self.FK_Tramites_Usuarios1">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Tramites" EntitySet="Tramites" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Tramites" Association="Self.FK_Traslados_Tramites">
+      <End Role="Tramites" EntitySet="Tramites" />
+      <End Role="Traslados" EntitySet="Traslados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Usuarios" Association="Self.FK_Traslados_Usuarios">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Traslados" EntitySet="Traslados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Traslados_Usuarios1" Association="Self.FK_Traslados_Usuarios1">
+      <End Role="Usuarios" EntitySet="Usuarios" />
+      <End Role="Traslados" EntitySet="Traslados" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Usuarios_Roles" Association="Self.FK_Usuarios_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Usuarios" EntitySet="Usuarios" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

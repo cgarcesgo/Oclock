@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="OClockModelStoreContainer" CdmEntityContainer="OClockEntities">
+    <EntitySetMapping Name="Categorias">
+      <EntityTypeMapping TypeName="OClockModel.Categoria">
+        <MappingFragment StoreEntitySet="Categorias">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
+          <ScalarProperty Name="PrecioPriorizado" ColumnName="PrecioPriorizado" />
+          <ScalarProperty Name="Precio" ColumnName="Precio" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleFavoritos">
+      <EntityTypeMapping TypeName="OClockModel.DetalleFavorito">
+        <MappingFragment StoreEntitySet="DetalleFavoritos">
+          <ScalarProperty Name="LongitudLlegada" ColumnName="LongitudLlegada" />
+          <ScalarProperty Name="LatitudLlegada" ColumnName="LatitudLlegada" />
+          <ScalarProperty Name="LongitudSalida" ColumnName="LongitudSalida" />
+          <ScalarProperty Name="LatitudSalida" ColumnName="LatitudSalida" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Llegada" ColumnName="Llegada" />
+          <ScalarProperty Name="Salida" ColumnName="Salida" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="FavoritoId" ColumnName="FavoritoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DetalleTramites">
+      <EntityTypeMapping TypeName="OClockModel.DetalleTramite">
+        <MappingFragment StoreEntitySet="DetalleTramites">
+          <ScalarProperty Name="LongitudLlegada" ColumnName="LongitudLlegada" />
+          <ScalarProperty Name="LatitudLlegada" ColumnName="LatitudLlegada" />
+          <ScalarProperty Name="LongitudSalida" ColumnName="LongitudSalida" />
+          <ScalarProperty Name="LatitudSalida" ColumnName="LatitudSalida" />
+          <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+          <ScalarProperty Name="Llegada" ColumnName="Llegada" />
+          <ScalarProperty Name="Salida" ColumnName="Salida" />
+          <ScalarProperty Name="CategoriaId" ColumnName="CategoriaId" />
+          <ScalarProperty Name="TramiteId" ColumnName="TramiteId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estados">
+      <EntityTypeMapping TypeName="OClockModel.Estado">
+        <MappingFragment StoreEntitySet="Estados">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EstadosTramites">
+      <EntityTypeMapping TypeName="OClockModel.EstadosTramite">
+        <MappingFragment StoreEntitySet="EstadosTramites">
+          <ScalarProperty Name="Novedad" ColumnName="Novedad" />
+          <ScalarProperty Name="TramiteId" ColumnName="TramiteId" />
+          <ScalarProperty Name="EstadoId" ColumnName="EstadoId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Favoritos">
+      <EntityTypeMapping TypeName="OClockModel.Favorito">
+        <MappingFragment StoreEntitySet="Favoritos">
+          <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Localizaciones">
+      <EntityTypeMapping TypeName="OClockModel.Localizacione">
+        <MappingFragment StoreEntitySet="Localizaciones">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="Latitud" ColumnName="Latitud" />
+          <ScalarProperty Name="Longitud" ColumnName="Longitud" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="OClockModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Tramites">
+      <EntityTypeMapping TypeName="OClockModel.Tramite">
+        <MappingFragment StoreEntitySet="Tramites">
+          <ScalarProperty Name="Comprobante" ColumnName="Comprobante" />
+          <ScalarProperty Name="FechaProgramado" ColumnName="FechaProgramado" />
+          <ScalarProperty Name="Priorizado" ColumnName="Priorizado" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ColaboradorId" ColumnName="ColaboradorId" />
+          <ScalarProperty Name="UsuarioId" ColumnName="UsuarioId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Traslados">
+      <EntityTypeMapping TypeName="OClockModel.Traslado">
+        <MappingFragment StoreEntitySet="Traslados">
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+          <ScalarProperty Name="ColaboradorDestinoId" ColumnName="ColaboradorDestinoId" />
+          <ScalarProperty Name="ColaboradorOrigenId" ColumnName="ColaboradorOrigenId" />
+          <ScalarProperty Name="TramiteId" ColumnName="TramiteId" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Usuarios">
+      <EntityTypeMapping TypeName="OClockModel.Usuario">
+        <MappingFragment StoreEntitySet="Usuarios">
+          <ScalarProperty Name="Activo" ColumnName="Activo" />
+          <ScalarProperty Name="RolId" ColumnName="RolId" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="User" ColumnName="User" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Nit" ColumnName="Nit" />
+          <ScalarProperty Name="Celular" ColumnName="Celular" />
+          <ScalarProperty Name="Apellido" ColumnName="Apellido" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

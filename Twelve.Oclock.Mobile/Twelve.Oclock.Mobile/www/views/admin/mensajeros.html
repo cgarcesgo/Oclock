@@ -1,0 +1,269 @@
+﻿<!DOCTYPE html>
+<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" http-equiv="Content-Type" />
+    <!-- jQuery Mobile -->
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../../scripts/menu.js"></script>
+    <script>
+        var loaded = false;
+        var mensajeros;
+
+        $(document).on("pagecreate", function () {
+            if (!loaded) {
+                Limpiar();
+                loaded = true;
+            }
+        });
+
+        function Atras() {
+            window.location.replace("index_admin.html");
+        }
+
+        function Limpiar() {
+
+            CargarMensajeros();
+
+            InicializaGuardar();
+            InicializaEditar();
+            InicializaEliminar();
+        }
+
+        function SetMensajeroId(id) {
+            localStorage.setItem("MensajeroId", id);
+
+            var Mensajero = getMensajeroById(id);
+
+            var nombres = $("#nombres");
+            var apellidos = $("#apellidos");
+            var nit = $("#nit");
+            var email = $("#email");
+            var celular = $("#celular");
+
+            nombres.val(Mensajero.Nombre);
+            apellidos.val(Mensajero.Apellido);
+            nit.val(Mensajero.Nit);
+            email.val(Mensajero.Email);
+            celular.val(Mensajero.Celular);
+        }
+
+        function InicializaGuardar() {
+
+            var popupGuardarForm = $(".popupGuardarForm");
+            var popupGuardarSatisfactorio = $(".popupGuardarSatisfactorio");
+            var popupGuardarCamposVacios = $(".popupGuardarCamposVacios");
+            var popupGuardarError = $(".popupGuardarError");
+            popupGuardarForm.attr("style", "display: inline");
+            popupGuardarSatisfactorio.attr("style", "display: none");
+            popupGuardarCamposVacios.attr("style", "display: none");
+            popupGuardarError.attr("style", "display: none");
+
+            var nombres = $("#nombresNew");
+            var apellidos = $("#apellidosNew");
+            var nit = $("#nitNew");
+            var email = $("#emailNew");
+            var celular = $("#celularNew");
+
+            nombres.val("");
+            apellidos.val("");
+            nit.val("");
+            email.val("");
+            celular.val("");
+
+            $("#popupGuardar").popup("close");
+        }
+
+        function InicializaEditar() {
+
+            var popupEditarForm = $(".popupEditarForm");
+            var popupEditarSatisfactorio = $(".popupEditarSatisfactorio");
+            var popupEditarCamposVacios = $(".popupEditarCamposVacios");
+            var popupEditarError = $(".popupEditarError");
+            popupEditarForm.attr("style", "display: inline");
+            popupEditarSatisfactorio.attr("style", "display: none");
+            popupEditarCamposVacios.attr("style", "display: none");
+            popupEditarError.attr("style", "display: none");
+
+            var nombres = $("#nombres");
+            var apellidos = $("#apellidos");
+            var nit = $("#nit");
+            var email = $("#email");
+            var celular = $("#celular");
+
+            nombres.val("");
+            apellidos.val("");
+            nit.val("");
+            email.val("");
+            celular.val("");
+
+            $("#popupEditar").popup("close");
+        }
+
+        function InicializaEliminar() {
+
+            var popupEliminarForm = $(".popupEliminarForm");
+            var popupEliminarSatisfactorio = $(".popupEliminarSatisfactorio");
+            var popupEliminarError = $(".popupEliminarError");
+            popupEliminarForm.attr("style", "display: inline");
+            popupEliminarSatisfactorio.attr("style", "display: none");
+            popupEliminarError.attr("style", "display: none");
+
+            $("#popupEliminar").popup("close");
+        }
+
+        function getMensajeroById(id) {
+            for (var i = 0; i < mensajeros.length; i++) {
+                if (mensajeros[i].Id == id) {
+                    return mensajeros[i];
+                }
+            }
+        }
+
+    </script>
+    <script src="../../scripts/admin/cargar_mensajeros.js"></script>
+    <script src="../../scripts/admin/guardar_mensajero.js"></script>
+    <script src="../../scripts/admin/actualizar_mensajero.js"></script>
+    <script src="../../scripts/admin/eliminar_mensajero.js"></script>
+</head>
+<body>
+    <div data-role="page" id="Mensajeros">
+
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>Mensajeros</h1>
+            <a href="#" onclick="Atras()" data-icon="back" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Back</a>
+            <a href="#popupGuardar" data-icon="plus" data-rel="popup" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-position-to="window" data-transition="slidedown">New</a>
+        </div>
+
+        <!--Content-->
+        <div role="main" class="ui-content">
+            <div class="content" id="content">
+                <div data-role="content">
+                    <form id="formulario">
+                        <div data-role="collapsible-set" data-content-theme="a" data-iconpos="right" id="setVerMensajeros">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Popup Guardar-->
+        <div data-role="popup" id="popupGuardar" data-dismissible="false" class="ui-corner-all">
+            <div class="popupGuardarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <input type="text" data-clear-btn="true" name="nombresNew" id="nombresNew" value="" placeholder="Nombre" />
+                        <input type="text" data-clear-btn="true" name="apellidosNew" id="apellidosNew" value="" placeholder="Apellidos" />
+                        <input type="text" data-clear-btn="true" name="nitNew" id="nitNew" value="" placeholder="Documento Identidad" />
+                        <input type="email" data-clear-btn="true" name="emailNew" id="emailNew" value="" placeholder="E-mail" />
+                        <input type="tel" data-clear-btn="true" name="celularNew" id="celularNew" value="" placeholder="Celular" />
+                        <br />
+                        <button type="button" id="eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="Guardar()">Guardar</button>
+                        <button type="button" id="cancelar_eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="InicializaGuardar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupGuardarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Mensajero guardado con éxito.</label>
+                        <a href="#" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-check ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupGuardarCamposVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Los campos son obligatorios.</label>
+                        <a href="#" onclick="InicializaGuardar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupGuardarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" onclick="InicializaGuardar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup editar-->
+        <div data-role="popup" id="popupEditar" data-dismissible="false" class="ui-corner-all">
+            <div class="popupEditarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <input type="text" data-clear-btn="true" name="nombres" id="nombres" value="" placeholder="Nombre" />
+                        <input type="text" data-clear-btn="true" name="apellidos" id="apellidos" value="" placeholder="Apellidos" />
+                        <input type="text" data-clear-btn="true" name="nit" id="nit" value="" placeholder="Documento Identidad" />
+                        <input type="email" data-clear-btn="true" name="email" id="email" value="" placeholder="E-mail" />
+                        <input type="tel" data-clear-btn="true" name="celular" id="celular" value="" placeholder="Celular" />
+                        <br />
+                        <button type="button" id="eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="Actualizar()">Actualizar</button>
+                        <button type="button" id="cancelar_eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="InicializaEditar()">Cancelar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEditarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Mensajero actualizado con éxito.</label>
+                        <a href="#" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-check ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEditarCamposVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Los campos son obligatorios.</label>
+                        <a href="#" onclick="InicializaEditar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEditarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" onclick="InicializaEditar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup Eliminar-->
+        <div data-role="popup" id="popupEliminar" data-dismissible="false" class="ui-corner-all">
+            <div class="popupEliminarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <label for="nametramite">¿Seguro de eliminar el Mensajero?</label>
+                        <button type="button" id="eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="Eliminar()">Si</button>
+                        <button type="button" id="cancelar_eliminar" class="ui-btn ui-corner-all ui-shadow ui-btn-b" onclick="InicializaEliminar()">No</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEliminarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        Mensajero eliminado exitosamente
+                        <a href="#" onclick="Limpiar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEliminarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Se ha producido un error inesperado. Vuelve a intentarlo más tarde.</label>
+                        <a href="#" onclick="InicializaEliminar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

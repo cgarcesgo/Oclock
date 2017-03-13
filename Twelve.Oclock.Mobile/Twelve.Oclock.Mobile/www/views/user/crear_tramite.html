@@ -1,0 +1,296 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" http-equiv="Content-Type" />
+    <title>Crear trámite</title>
+    <!-- jQuery Mobile -->
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../../scripts/menu.js"></script>
+    <script>
+        var nextId = 1;
+        var loaded = false;
+        var comprobante = false;
+        var favoritos = [];
+        var categorias = [];
+        var mensajeros = [];
+
+
+        //Carga la página
+        $(document).on("pagecreate", function () {
+
+            if (!loaded) {
+                Limpiar();
+                loaded = true;
+            }
+
+            //Cambia estado de los páneles apra programar trámite
+            $('#programar').bind('change', function () {
+                var panelpriorizado = $(".panelpriorizado");
+                var panelprogramar = $(".panelprogramar");
+
+                if ($('#programar').is(":checked")) {
+                    panelprogramar.attr("style", "display: inline");
+                    panelpriorizado.attr("style", "display: none");
+                } else {
+                    panelprogramar.attr("style", "display: none");
+                    panelpriorizado.attr("style", "display: inline");
+                }
+            });
+
+            $('#priorizado').bind('change', function () {
+                var popupMensajerosNoP = $(".popupMensajerosNoP");
+                var popupMensajerosP = $(".popupMensajerosP");
+
+                if ($('#priorizado').is(":checked")) {
+                    popupMensajerosNoP.attr("style", "display: none");
+                    popupMensajerosP.attr("style", "display: inline");
+                    $("#popupPriorizado").popup("open");
+                } else {
+                    popupMensajerosNoP.attr("style", "display: inline");
+                    popupMensajerosP.attr("style", "display: none");
+                }
+            });
+
+            //Cambia texto del check
+            $("#programar").flipswitch({
+                offText: "No",
+                onText: "Si"
+            });
+
+            //Cambia texto del check
+            $("#priorizado").flipswitch({
+                offText: "No",
+                onText: "Si"
+            });
+        });
+
+        function atras() {
+            window.location.replace("index_user.html");
+        };
+
+        function GuardarMensajero(id) {
+            localStorage.setItem("TramiteColaboradorId", id);
+            $("#popupMensajeros").popup("close");
+        };
+
+        function InicializaEnviar() {
+            var popupEnviarForm = $(".popupEnviarForm");
+            var popupEnviarSatisfactorio = $(".popupEnviarSatisfactorio");
+            var popupEnviarVacio = $(".popupEnviarVacio");
+            var popupEnviarError = $(".popupEnviarError");
+            popupEnviarForm.attr("style", "display: inline");
+            popupEnviarSatisfactorio.attr("style", "display: none");
+            popupEnviarVacio.attr("style", "display: none");
+            popupEnviarError.attr("style", "display: none");
+        }
+    </script>
+    <script src="../../scripts/user/agregar_comprobante.js"></script>
+    <script src="../../scripts/user/agregar_trayecto.js"></script>
+    <script src="../../scripts/user/cargar_categorias.js"></script>
+    <script src="../../scripts/user/cargar_favorito.js"></script>
+    <script src="../../scripts/user/cargar_favoritos.js"></script>
+    <script src="../../scripts/user/cargar_mensajeros.js"></script>
+    <script src="../../scripts/user/cargar_salidas.js"></script>
+    <script src="../../scripts/user/eliminar_trayecto.js"></script>
+    <script src="../../scripts/user/enviar_favorito.js"></script>
+    <script src="../../scripts/user/enviar_tramite.js"></script>
+    <script src="../../scripts/user/limpiar_crear_tramite.js"></script>
+    <script src="../../scripts/get_item_by_id.js"></script>
+    <script src="../../scripts/user/locations.js"></script>
+</head>
+<body>
+    <div data-role="page" id="demo-page" data-url="demo-page">
+
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>Crear Trámite</h1>
+            <a href="#" id="back" data-icon="back" data-iconpos="notext" data-shadow="false" data-iconshadow="false" onclick="atras();">Open</a>
+            <a href="#popupBuscar" data-icon="search" data-rel="popup" data-iconpos="notext" data-shadow="false" data-iconshadow="false" data-position-to="window" data-transition="slidedown">Open</a>
+        </div>
+
+        <!--Content-->
+        <div role="main" class="ui-content">
+            <div class="content" id="content">
+                <div data-role="content">
+                    <form id="formulario">
+                        <div data-role="collapsible-set" data-content-theme="a" data-iconpos="right" id="set">
+                        </div>
+
+                        <button type="button" data-icon="plus" data-inline="true" data-iconpos="left" id="comprobante" data-mini="true">Comprobante</button>
+                        <button type="button" data-icon="plus" data-inline="true" data-iconpos="left" id="add" data-mini="true">Otro trayecto</button>
+
+                        <div data-role="fieldcontain">
+                            <label for="programar">Programar</label>
+                            <input type="checkbox" data-role="flipswitch" name="programar" id="programar" />
+                        </div>
+
+                        <div class="panelprogramar" style="display: none">
+                            <div data-role="fieldcontain">
+                                <label for="fechaprogramado">Fecha de envío</label>
+                                <input type="datetime-local" data-clear-button="true" name="fechapriorizado" data-inline="true" id="fechaprogramado" value="Seleccione fecha" />
+                            </div>
+                        </div>
+
+                        <div class="panelpriorizado" style="display: inline">
+                            <div data-role="fieldcontain">
+                                <label for="priorizado">Priorizado</label>
+                                <input type="checkbox" data-role="flipswitch" name="priorizado" id="priorizado" />
+                            </div>
+                        </div>
+
+                        <a href="#popupMensajeros" data-iconpos="notext" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" data-transition="slidedown" class="ui-btn ui-icon-user ui-btn-icon-notext" style="-webkit-border-radius: .3125em; border-radius: .3125em;" id="btnAgregarMensajero"></a>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Footer-->
+        <div data-role="footer" class="ui-bar" data-position="fixed">
+            <a href="#popupEnviar" data-icon="carat-r" data-iconpos="right" data-mini="true" data-inline="true" id="send" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" style="text-decoration: none;">
+                Enviar Trámite
+                <!--<button type="button" data-icon="carat-r" data-iconpos="right" data-mini="true" data-inline="true" id="send">Enviar Trámite</button>-->
+            </a>
+            <!--<button type="button" data-icon="carat-r" data-iconpos="right" data-mini="true" data-inline="true" id="send">Enviar Trámite</button>-->
+            <a href="#popupStar" data-iconpos="notext" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" data-transition="slidedown" class="ui-btn ui-icon-star ui-btn-icon-notext" style="-webkit-border-radius: .3125em; border-radius: .3125em;"></a>
+            <a href="#popupClear" data-iconpos="notext" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" data-transition="slidedown" class="ui-btn ui-icon-delete ui-btn-icon-notext" style="-webkit-border-radius: .3125em; border-radius: .3125em;"></a>
+        </div>
+
+        <!--Popup Enviar Tramite-->
+        <div data-role="popup" id="popupEnviar" data-dismissible="false">
+            <div class="popupEnviarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px;">
+                        <label for="lblmensaje"><b>Estamos validado su información.</b></label>
+                        <label for="lblmensaje">Esta operación durará unos segundos.</label>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEnviarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <center><label id="lblmensaje"></label></center>
+                        <a href="#" data-rel="back" onclick="InicializaEnviar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEnviarVacio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Todos los campos son obligatorios.</label>
+                        <a href="#" data-rel="back" onclick="InicializaEnviar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupEnviarError" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <center><label id="lblmensajeerror"></label></center>
+                        <a href="#" data-rel="back" onclick="InicializaEnviar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup Buscar-->
+        <div data-role="popup" id="popupBuscar" data-dismissible="false">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <ul data-role="listview" data-inset="true" style="min-width: 210px;" data-content-theme="a">
+                <li data-role="list-divider">Seleccione una opción</li>
+                <li id="setVerFavoritos"></li>
+            </ul>
+        </div>
+
+        <!--Popup Mensajero-->
+        <div data-role="popup" id="popupMensajeros" data-dismissible="false">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div class="popupMensajerosNoP" style="display: inline">
+                <ul data-role="listview" data-inset="true" style="min-width: 210px;" data-content-theme="a">
+                    <li data-role="list-divider">Seleccione una opción</li>
+                    <li id="setpopupMensajeros"></li>
+                </ul>
+            </div>
+            <div class="popupMensajerosP" style="display: none">
+                <p><center>No se puede seleccionar mensajero si el trámite es priorizado</center></p>
+            </div>
+        </div>
+
+        <!--Popup Favorito-->
+        <div data-role="popup" id="popupStar" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <form>
+                <div style="padding: 10px 20px;">
+                    <label for="nametramite">Ingrese el nombre del trámite</label>
+                    <input type="text" name="nametramite" id="nametramite" value="" placeholder="Nombre" />
+                    <button type="button" id="savestar" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Guardar</button>
+                </div>
+            </form>
+        </div>
+
+        <!--Popup Comprobante-->
+        <div data-role="popup" id="popupComprobante" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <form>
+                <div style="padding: 10px 20px;">
+                    <label for="nametramite">El comprobante tiene un costo adicional en el trámite, ¿Desea agregarlo?</label>
+                    <button type="button" id="savecomprobante" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Aceptar</button>
+                </div>
+            </form>
+        </div>
+
+        <!--Popup Clear-->
+        <div data-role="popup" id="popupClear" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <form>
+                <div style="padding: 10px 20px;">
+                    <label for="nametramite">Se perderán los datos ingresados ¿Desea continuar?</label>
+                    <button type="button" id="limpiar" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="Limpiar()">Aceptar</button>
+                </div>
+            </form>
+        </div>
+
+        <!--Popup Eliminar trayecto-->
+        <div data-role="popup" id="popupEliminarTrayecto" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" onclick="DevolverCambios()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <div class="popupEliminar" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <label for="nametramite">¿Seguro de eliminar el trayecto?</label>
+                        <button type="button" id="btnEliminarTrayecto" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check" onclick="EliminarTrayecto()">Aceptar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupNoEliminar" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>No se puede eliminar el último trayecto.</label>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!--Popup Priorizado-->
+        <div data-role="popup" id="popupPriorizado" data-dismissible="false" class="ui-corner-all">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <form>
+                <div style="padding: 10px 20px;">
+                    <label>El trámite priorizado tiene un costo adicional. Para más información visite la sección de Precios y categorías.</label>
+                </div>
+            </form>
+        </div>
+
+        <!--Popup Mapa-->
+        <div data-role="popup" id="popupMap" data-dismissible="false">
+            <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+            <form>
+                <iframe id="iframe_map" src="../map.html" width="300" height="360" seamless="" align="middle" frameborder="0" style="margin:10px 10px 10px 10px"></iframe>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

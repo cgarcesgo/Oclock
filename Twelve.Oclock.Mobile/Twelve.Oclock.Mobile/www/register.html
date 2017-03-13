@@ -1,0 +1,277 @@
+﻿<!DOCTYPE html>
+<html xml:lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <title>Validacion de Usuarios</title>
+    <link rel="stylesheet" type="text/css" href="jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <!--Registrar-->
+    <script>
+        //Carga la página
+        $(document).on("pagecreate", function () {
+            if (localStorage.getItem("UserRegister") != "") {
+                var registro = JSON.parse(localStorage.getItem("UserRegister"));
+
+                var nombres = $("#nombres");
+                var apellidos = $("#apellidos");
+                var nit = $("#nit");
+                var email = $("#email");
+                var celular = $("#celular");
+                var tusuario = $("#tusuario");
+                var tcontrasenia = $("#tcontrasenia");
+                var tconfirmecontrasenia = $("#tconfirmecontrasenia");
+
+                nombres.val(registro.Nombre);
+                apellidos.val(registro.Apellido);
+                nit.val(registro.Nit);
+                email.val(registro.Email);
+                celular.val(registro.Celular);
+                tusuario.val(registro.User);
+                tcontrasenia.val(registro.Contrasenia);
+                tconfirmecontrasenia.val(registro.ConfirmeContrasenia);
+            }
+
+            //Cambia estado de los páneles apra programar trámite
+            $('#terminos').bind('change', function () {
+                var aceptar = $("#aceptar");
+
+                if ($('#terminos').is(":checked")) {
+                    aceptar.prop('disabled', false);
+                } else {
+                    aceptar.prop('disabled', true);
+                }
+            });
+
+            $("#aceptar").click(function () {
+                var popupRegistrarForm = $(".popupRegistrarForm");
+                var popupRegistrarSatisfactorio = $(".popupRegistrarSatisfactorio");
+                var popupCamposVacios = $(".popupCamposVacios");
+                var popupContrasenaDiferente = $(".popupContrasenaDiferente");
+                var popupUsuarioExistente = $(".popupUsuarioExistente");
+
+                var uriUsuarioPost = "http://40.85.92.66:1010/api/Usuarios";
+
+                var nombres = $("#nombres");
+                var apellidos = $("#apellidos");
+                var nit = $("#nit");
+                var email = $("#email");
+                var celular = $("#celular");
+                var tusuario = $("#tusuario");
+                var tcontrasenia = $("#tcontrasenia");
+                var tconfirmecontrasenia = $("#tconfirmecontrasenia");
+
+                if (nombres.val() == ""
+                    || apellidos.val() == ""
+                    || email.val() == ""
+                    || celular.val() == ""
+                    || tusuario.val() == ""
+                    || tcontrasenia.val() == ""
+                    || tconfirmecontrasenia.val() == "") {
+                    popupRegistrarForm.attr("style", "display: none");
+                    popupRegistrarSatisfactorio.attr("style", "display: none");
+                    popupContrasenaDiferente.attr("style", "display: none");
+                    popupUsuarioExistente.attr("style", "display: none");
+                    popupCamposVacios.attr("style", "display: inline");
+                }
+                else {
+                    if (tcontrasenia.val() == tconfirmecontrasenia.val()) {
+                        var usuario = {
+                            Nombre: nombres.val(),
+                            Apellido: apellidos.val(),
+                            Nit: nit.val(),
+                            Email: email.val(),
+                            Celular: celular.val(),
+                            User: tusuario.val(),
+                            Password: tcontrasenia.val(),
+                            RolId: 3
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            data: JSON.stringify(usuario),
+                            url: uriUsuarioPost,
+                            contentType: "application/json",
+                            error: function (xhr, status, error) {
+                                if (error == "Not Found") {
+                                    popupRegistrarForm.attr("style", "display: none");
+                                    popupContrasenaDiferente.attr("style", "display: none");
+                                    popupRegistrarSatisfactorio.attr("style", "display: none");
+                                    popupCamposVacios.attr("style", "display: none");
+                                    popupUsuarioExistente.attr("style", "display: inline");
+                                }
+                                return false;
+                            },
+                            success: function (msg) {
+                                var ruta = "http://40.85.92.66:1010/api/Usuarios?user=" + msg.User;
+                                $.ajax({
+                                    type: "GET",
+                                    url: ruta,
+                                    data: "{}",
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "json",
+                                    success: function (msg) {
+                                        popupRegistrarForm.attr("style", "display: none");
+                                        popupContrasenaDiferente.attr("style", "display: none");
+                                        popupRegistrarSatisfactorio.attr("style", "display: inline");
+                                        popupCamposVacios.attr("style", "display: none");
+                                        popupUsuarioExistente.attr("style", "display: none");
+                                        localStorage.setItem("UserId", msg.Id);
+                                        localStorage.setItem("User", JSON.stringify(msg));
+                                    }
+                                });
+                                return false;
+                            }
+                        });
+                    }
+                    else {
+                        popupRegistrarForm.attr("style", "display: none");
+                        popupRegistrarSatisfactorio.attr("style", "display: none");
+                        popupCamposVacios.attr("style", "display: none");
+                        popupContrasenaDiferente.attr("style", "display: inline");
+                        popupUsuarioExistente.attr("style", "display: none");
+                    }
+                }
+            });
+
+            //Cambia texto del check
+            $("#terminos").flipswitch({
+                offText: "No",
+                onText: "Si"
+            });
+        });
+
+        function InicializaRegistrar() {
+            var popupRegistrarForm = $(".popupRegistrarForm");
+            var popupRegistrarSatisfactorio = $(".popupRegistrarSatisfactorio");
+            var popupCamposVacios = $(".popupCamposVacios");
+            var popupContrasenaDiferente = $(".popupContrasenaDiferente");
+            var popupUsuarioExistente = $(".popupUsuarioExistente");
+            popupRegistrarForm.attr("style", "display: inline");
+            popupRegistrarSatisfactorio.attr("style", "display: none");
+            popupCamposVacios.attr("style", "display: none");
+            popupContrasenaDiferente.attr("style", "display: none");
+            popupUsuarioExistente.attr("style", "display: none");
+        }
+
+        function Ingresar() {
+            window.location.replace("views/user/index_user.html");
+        }
+
+        function Atras() {
+            window.location.replace("index.html");
+        }
+
+        function RegistrarTemporal() {
+            var nombres = $("#nombres");
+            var apellidos = $("#apellidos");
+            var nit = $("#nit");
+            var email = $("#email");
+            var celular = $("#celular");
+            var tusuario = $("#tusuario");
+            var tcontrasenia = $("#tcontrasenia");
+            var tconfirmecontrasenia = $("#tconfirmecontrasenia");
+
+            var usuario = {
+                Nombre: nombres.val(),
+                Apellido: apellidos.val(),
+                Nit: nit.val(),
+                Email: email.val(),
+                Celular: celular.val(),
+                User: tusuario.val(),
+                Contrasenia: tcontrasenia.val(),
+                ConfirmeContrasenia: tconfirmecontrasenia.val()
+            };
+
+            localStorage.setItem("UserRegister", JSON.stringify(usuario));
+        }
+
+        function VerTerminos() {
+            window.location.replace("terminos_condiciones.html");
+        }
+
+    </script>
+
+</head>
+<body>
+    <div data-role="page" id="inicio">
+
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>Registrar</h1>
+            <a href="#" onclick="Atras()" data-icon="back" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Back</a>
+        </div>
+
+        <!--Content-->
+        <div data-role="content">
+            <form id="formulario">
+                <input type="text" data-clear-btn="true" name="nombres" id="nombres" value="" placeholder="Nombre" onchange="RegistrarTemporal()"/>
+                <input type="text" data-clear-btn="true" name="apellidos" id="apellidos" value="" placeholder="Apellidos" onchange="RegistrarTemporal()"/>
+                <input type="text" data-clear-btn="true" name="nit" id="nit" value="" placeholder="Nit (opcional)" onchange="RegistrarTemporal()"/>
+                <input type="email" data-clear-btn="true" name="email" id="email" value="" placeholder="E-mail" onchange="RegistrarTemporal()"/>
+                <input type="tel" data-clear-btn="true" name="celular" id="celular" value="" placeholder="Celular" onchange="RegistrarTemporal()"/>
+                <input type="text" data-clear-btn="true" name="tusuario" id="tusuario" value="" placeholder="Nombre de Usuario" onchange="RegistrarTemporal()"/>
+                <input type="password" name="tcontrasenia" id="tcontrasenia" placeholder="Contraseña" onchange="RegistrarTemporal()"/>
+                <input type="password" name="tconfirmecontrasenia" id="tconfirmecontrasenia" placeholder="Confirme Contraseña" onchange="RegistrarTemporal()"/>
+                <center><a href="#" onclick="VerTerminos()">Ver Términos y Condiciones de O'Clock.</a></center>
+                <br />
+                <br />
+                <a href="#popupregistrar" data-rel="popup" data-shadow="false" data-iconshadow="false" data-position-to="window" style="text-decoration: none;"><button type="button" data-icon="check" data-iconpos="left" data-mini="false" data-inline="false" id="verterminos">Aceptar</button></a>
+                <!--<button type="button" data-icon="check" data-iconpos="left" data-mini="false" data-inline="false" id="verterminos">Aceptar</button>-->
+                <button type="button" data-icon="delete" data-iconpos="left" data-mini="false" data-inline="false" id="cancelar" onclick="Atras()">Cancelar</button>
+            </form>
+        </div>
+
+        <!--Popup actualizar-->
+        <div data-role="popup" id="popupregistrar" data-dismissible="false" class="ui-corner-all">
+            <div class="popupRegistrarForm" style="display: inline">
+                <form>
+                    <div style="padding: 10px 20px;">
+                        <div data-role="fieldcontain">
+                            <label for="priorizado">Acepto Términos y Condiciones de O'Clock.</label>
+                            <input type="checkbox" data-role="flipswitch" name="terminos" id="terminos" />
+                        </div>
+                        <button type="button" disabled data-icon="check" data-iconpos="left" data-mini="false" data-inline="false" id="aceptar">Aceptar</button>
+                        <a href="#" data-rel="back" onclick="InicializaRegistrar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupRegistrarSatisfactorio" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Usuario registrado con éxito.</label>
+                        <button type="button" data-icon="action" data-iconpos="left" data-mini="false" data-inline="false" onclick="Ingresar()">Ingresar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="popupCamposVacios" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Los campos son obligatorios.</label>
+                        <a href="#" data-rel="back" onclick="InicializaRegistrar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupContrasenaDiferente" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>Las contraseñas no coinciden.</label>
+                        <a href="#" data-rel="back" onclick="InicializaRegistrar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+            <div class="popupUsuarioExistente" style="display: none">
+                <form>
+                    <div style="padding: 10px;">
+                        <label>El Usuario ya existe.</label>
+                        <a href="#" data-rel="back" onclick="InicializaRegistrar()" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-left">Cerrar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

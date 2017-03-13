@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" http-equiv="Content-Type" />
+    <!-- jQuery Mobile -->
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/jquery.mobile.icons.min.css">
+    <link rel="stylesheet" type="text/css" href="../../jquery-mobile-theme-141633-0/themes/oclock_theme.min.css">
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile.structure-1.4.5.min.css" />
+    <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="../../scripts/jquery.mobile-1.4.5.min.js"></script>
+    <!--<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>-->
+    <script src="../../scripts/menu.js"></script>
+</head>
+<body>
+    <div data-role="page" id="demo-page" data-url="demo-page">
+        <!--Header-->
+        <div data-role="header" data-theme="a" data-position="fixed">
+            <h1>Categorías</h1>
+            <a href="#left-panel" data-icon="bars" data-iconpos="notext" data-shadow="false" data-iconshadow="false">Open</a>
+        </div>
+        <!--Content-->
+        <div role="main" class="ui-content">
+            <div class="content" id="content">
+                <div data-role="content">
+                    <form id="formulario">
+                        <div data-role="collapsible-set" data-content-theme="a" data-iconpos="right" id="setVerCategorias">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!--Menu-->
+        <div data-role="panel" data-position-fixed="true" data-display="overlay" id="left-panel">
+            <ul data-role="listview" data-content-theme="a">
+                <li data-icon="delete"><a href="#" data-rel="close">Cerrar Menú</a></li>
+                <li><a href="#" onclick="IniciarTramite()">Crear Trámite</a></li>
+                <li><a href="perfil.html">Perfil</a></li>
+                <li><a href="ver_tramite.html">Mis trámites</a></li>
+                <!--<li><a href="ver_categorias.html">Precios y categorías</a></li>-->
+                <li><a href="terminos_condiciones.html">Términos y condiciones</a></li>
+                <li><a href="#" id="cerrarPerfil" onclick="CerrarSesion()">Cerrar sesión</a></li>
+            </ul>
+        </div>
+
+    </div>
+</body>
+</html>
